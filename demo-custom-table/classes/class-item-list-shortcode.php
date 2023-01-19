@@ -2,15 +2,15 @@
 
 namespace JansenMorin\DemoCustomTable;
 
-require_once( 'class-demo-item-handler.php' );
-require_once( 'class-demo-item.php' );
+require_once plugin_dir_path( __FILE__ ) . 'class-demo-item-handler.php';
+require_once plugin_dir_path( __FILE__ ) . 'class-demo-item.php';
 
 class ItemListShortcode {
-    public string $shortcode_name;
-    public string $add_nonce_action;
-    public string $add_nonce_key;
-    public string $delete_nonce_action;
-    public string $delete_nonce_key;
+    public $shortcode_name;
+    public $add_nonce_action;
+    public $add_nonce_key;
+    public $delete_nonce_action;
+    public $delete_nonce_key;
     
     public function __construct() {
         $this->shortcode_name = "demo-table-item-list";
@@ -27,21 +27,21 @@ class ItemListShortcode {
     public function display() {
         $demo_item_handler = new DemoItemHandler();
 
-        if ( isset( $_REQUEST[ 'delete-item' ] ) ) {
-            $item_delete_nonce_key = $this->delete_nonce_key . '-' . $_REQUEST[ 'delete-item' ];
-            $item_delete_nonce_action = $this->delete_nonce_action . '-' . $_REQUEST[ 'delete-item' ];
+        if ( isset( $_REQUEST['delete-item'] ) ) {
+            $item_delete_nonce_key = $this->delete_nonce_key . '-' . $_REQUEST['delete-item'];
+            $item_delete_nonce_action = $this->delete_nonce_action . '-' . $_REQUEST['delete-item'];
 
             if (
-                isset( $_REQUEST[$item_delete_nonce_key] ) &&
-                1 == wp_verify_nonce( $_REQUEST[$item_delete_nonce_key], $item_delete_nonce_action )
+                isset( $_REQUEST[ $item_delete_nonce_key ] ) &&
+                1 == wp_verify_nonce( $_REQUEST[ $item_delete_nonce_key ], $item_delete_nonce_action )
             ) {
-                $delete_item_id = sanitize_text_field( $_REQUEST[ 'delete-item' ] );
+                $delete_item_id = sanitize_text_field( $_REQUEST['delete-item'] );
                 $demo_item_handler->delete( $delete_item_id );
             }
         }
 
-        if ( isset( $_REQUEST[ 'item-name' ] ) && 1 == wp_verify_nonce( $_REQUEST[$this->add_nonce_key], $this->add_nonce_action ) ) {
-            $item_name = sanitize_text_field( $_REQUEST[ 'item-name' ] );
+        if ( isset( $_REQUEST['item-name'] ) && 1 == wp_verify_nonce( $_REQUEST[ $this->add_nonce_key ], $this->add_nonce_action ) ) {
+            $item_name = sanitize_text_field( $_REQUEST['item-name'] );
 
             $new_item = new DemoItem(
                 array(
@@ -61,12 +61,12 @@ class ItemListShortcode {
             <?php if ( ! empty( $items ) ) : ?>
                 <?php foreach ( $items as $item ) : ?>
                     <?php
-                        $item_delete_nonce_key = $this->delete_nonce_key . '-' . $item[ 'id' ];
-                        $item_delete_nonce_action = $this->delete_nonce_action . '-' . $item[ 'id' ];    
+                        $item_delete_nonce_key = $this->delete_nonce_key . '-' . $item['id'];
+                        $item_delete_nonce_action = $this->delete_nonce_action . '-' . $item['id'];    
                     ?>
                     <p><?php esc_html_e( $item[ 'name' ] ); ?></p>
-                    <form action="" method="post" name="<?php esc_attr_e( "delete-" . $item[ 'id' ] ); ?>">
-                        <input type="hidden" name="delete-item" value="<?php esc_attr_e( $item[ 'id' ] ); ?>">
+                    <form action="" method="post" name="<?php esc_attr_e( "delete-" . $item['id'] ); ?>">
+                        <input type="hidden" name="delete-item" value="<?php esc_attr_e( $item['id'] ); ?>">
                         <?php wp_nonce_field( $item_delete_nonce_action,  $item_delete_nonce_key ); ?>
                         <input type="submit" value="Delete">
                     </form>

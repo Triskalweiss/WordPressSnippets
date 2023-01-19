@@ -3,9 +3,9 @@
 namespace JansenMorin\DemoCustomTable;
 
 class DemoItem {
-    public int $id;
-    public string $date_created;
-    public string $name;
+    public $id;
+    public $date_created;
+    public $name;
 
     public function __construct ( $properties ) {
         if ( ! empty( $properties['id'] ) ) {

@@ -3,8 +3,8 @@
 namespace JansenMorin\DemoCustomTable;
 
 class DatabaseHandler {
-    public string $database_version;
-    public string $database_version_option_key;
+    public $database_version;
+    public $database_version_option_key;
 
     public function __construct () {
         $this->database_version = '1.0.0';

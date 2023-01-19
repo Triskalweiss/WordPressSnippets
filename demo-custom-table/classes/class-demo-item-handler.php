@@ -3,7 +3,7 @@
 namespace JansenMorin\DemoCustomTable;
 
 class DemoItemHandler {
-    public string $table_name;
+    public $table_name;
 
     public function __construct () {
         global $wpdb;

@@ -2,11 +2,11 @@
 namespace JansenMorin\DemoCustomFields;
 
 class DemoCustomTextField {
-    public string $display_title;
-    public string $meta_key;
-    public string $nonce_action;
-    public string $nonce_key;
-    public string $input_key;
+    public $display_title;
+    public $meta_key;
+    public $nonce_action;
+    public $nonce_key;
+    public $input_key;
 
     public function __construct () {
         $this->display_title = 'Demo Custom Field';
